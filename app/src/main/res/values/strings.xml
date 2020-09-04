@@ -4,4 +4,5 @@
     <string name="username_label">Username</string>
     <string name="password_label">Password</string>
     <string name="login_button_label">Login</string>
+    <string name="welcome_message">Welcome</string>
 </resources>

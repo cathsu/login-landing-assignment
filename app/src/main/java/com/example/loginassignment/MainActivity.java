@@ -2,6 +2,8 @@ package com.example.loginassignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +12,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String PREDEFINED_USERNAME = "din_djarin";
+    private static final String PREDEFINED_PASSWORD = "baby_yoda_ftw";
+
+    private static MainActivity mainActivity;
     private TextView mLoginTitle, mUsernameLabel, mPasswordLabel;
     private EditText mUsername, mPassword;
     private Button mLoginButton;
-
-    private static final String PREDEFINED_USERNAME = "din_djarin";
-    private static final String PREDEFINED_PASSWORD = "baby_yoda_ftw";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,28 +28,47 @@ public class MainActivity extends AppCompatActivity {
         mLoginTitle = findViewById(R.id.loginTextView);
         mUsernameLabel = findViewById(R.id.usernameTextView);
         mPasswordLabel = findViewById(R.id.passwordTextView);
-
         mUsername = findViewById(R.id.usernameEditText);
         mPassword = findViewById(R.id.passwordEditText);
-
         mLoginButton = findViewById(R.id.loginButton);
     }
 
-    public void login(View view) {
-
+    public static Context getContext() {
+        return mainActivity;
     }
 
-    private void validateCredentials() {
+    public void login(View view) {
+        if (validateCredentials()) {
+            Intent intent = Landing.getIntent(getApplicationContext());
+            startActivity(intent);
+        }
+    }
+
+    private Boolean validateCredentials() {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
 
-        Boolean isUsernameCorrect = username.equals(PREDEFINED_USERNAME) ? true : false;
-        Boolean isPasswordCorrect = password.equals(PREDEFINED_PASSWORD) ? true : false;
+        Boolean isUsernameCorrect = validateUsername(username);
+        Boolean isPasswordCorrect = validatePassword(password);
+        setError(isUsernameCorrect, isPasswordCorrect);
 
-
-
-
+        return isUsernameCorrect && isPasswordCorrect;
     }
 
+    public boolean validateUsername(String username) {
+        return username.equals(PREDEFINED_USERNAME) ? true : false;
+    }
 
+    public boolean validatePassword(String username) {
+        return username.equals(PREDEFINED_PASSWORD) ? true : false;
+    }
+
+    private void setError(Boolean isUsernameCorrect, Boolean isPasswordCorrect) {
+        if (!isUsernameCorrect) {
+            mUsername.setError("Username incorrect");
+        }
+        if (!isPasswordCorrect) {
+            mPassword.setError("Password incorrect");
+        }
+    }
 }
