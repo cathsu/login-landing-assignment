@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         if (validateCredentials()) {
-            Intent intent = Landing.getIntent(getApplicationContext());
+            Intent intent = Landing.getIntent(getApplicationContext(), mUsername.getText().toString());
             startActivity(intent);
         }
     }
