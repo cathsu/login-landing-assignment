@@ -1,6 +1,5 @@
 package com.example.loginassignment;
 
-import android.content.Intent;
 
 import org.junit.Test;
 
